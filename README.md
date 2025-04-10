@@ -96,3 +96,93 @@ Would you like to play again? (y/n):
 
 If the user enters ‘y’, the game repeats.
 If the user enters anything else, the game quits.
+
+
+
+## Technical Documentation
+
+### Project Structure
+```
+IFCS1-SUMM1/
+├── main.py           		# Main file for running the game, calls the below functions
+├── games.py      		# Runs the game through the function maths_game()
+├── questions.py  		# Generates random, answerable linear equations
+```
+
+### Project Files
+#### main.py
+This file launches the linear equation maths game from `games.py` by importing the `maths_game` function.  
+It also controls the loop for the game to be played indefinitely depending on the users wish, using the function `loop_maths_game(play_game)` which takes a single parameter `play_game`, and uses this to loop the `launch_maths_game()` function.  
+
+#### Functions
+#### Launch_maths_game()
+```
+def launch_maths_game():
+        
+        # New lines for readability
+        print("") 
+        print("") 
+        
+        # Launch the maths game
+        maths_game()
+```
+This function launches the `maths_game()` function imported from `games.py`.  
+
+#### Loop_maths_game(play_game)
+```
+def loop_maths_game(play_game):
+    while play_game == "y":
+
+        # Launch the maths game
+        launch_maths_game()
+
+        # Ask the user if they want to play again
+        play_game = input("Would you like to play again? (y/n): ").lower()
+
+```
+This function launches the maths game under a loop which, after the first game, asks the user if they want to play again and sets the variable `play_game` accordingly, staying in the loop if the user responds with `y`.  
+It is assumed that any input other than `y` is `n`, and the script will end here.  
+
+#### games.py
+
+#### Functions
+This file has a single function called `maths_game()` which introduces and plays the game, taking inputs of `total_questions` and `user_answer` and uses error handling with `isinstance` and `try/except` to catch invalid (non-integer) inputs.  
+
+It generates the maths questions and answers using the `generate_linear_equation` function which is imported from `questions.py` and then equates these with `user_answer` to increment `user_score` and `question_number` to track the overall score which is displayed at the end in the form of `user_score/total_questions`.
+
+#### questions.py
+
+#### Functions
+This file has a single function called `generate_linear_equation()` which generates a linear equation in the form `a + bx = y`.  
+
+```
+def generate_linear_equation():
+
+    # Generate random values for alpha, beta, and gamma
+    alpha = random.randint(1, 10)
+    beta = random.randint(1, 10)
+    gamma = random.randint(2, 20)
+
+    # Calculate the answer to the equation
+    correct_answer = (gamma / alpha) / beta
+
+    # Check if the answer is an integer. If not, generate new values for alpha, beta, and gamma.
+    while correct_answer % 1 != 0:
+        alpha = random.randint(1, 10)
+        beta = random.randint(1, 10)
+        gamma = random.randint(2, 20)
+        correct_answer = (gamma / alpha) / beta
+
+    # Convert the answer to an integer
+    linear_eq_answer = int(correct_answer)
+
+    return alpha, beta, gamma, linear_eq_answer
+```
+
+It generates random values using the imported `random` module, and checks that the answer to the question is a positive integer, and if not, it generates new values until it finds a desirable solution. The user should not need a calculator to play the game.  
+
+The function returns `a`, `b` and `y` values, as well as the answer to the question (`x`), and refers to these with the variables `alpha`, `beta`, `gamma`, and `linear_eq_answer` respectively.
+
+### Dependencies
+•	The files use Python’s built-in libraries `random`, `input()` and `isinstance()`.  
+•	No external installations or packages are needed.
