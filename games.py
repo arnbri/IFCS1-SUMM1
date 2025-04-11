@@ -3,10 +3,7 @@ from questions import generate_linear_equation
 
 def maths_game():
     '''
-    A maths game that generates linear equations and asks the user to solve them.
-    The game prompts the user to specify the number of questions they want to solve.
-    For each question, it generates a linear equation in the form alpha + (beta)x = gamma,
-    and asks the user to solve for x. The user's score is displayed at the end.
+    A maths game that generates random linear equations and asks the user to solve them, displaying a score at the end.
 
     Returns:
     None
